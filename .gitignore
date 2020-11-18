@@ -1,0 +1,6 @@
+*__pycache__
+*.pytest_cache
+*.cache
+*.pyc
+*.swp
+aoc_session.sh
