@@ -1,4 +1,6 @@
-## Template for Advent Of Code in Python
+# AoC 2020
+
+## Templates and download script
 
 Download today's puzzle input from [adventofcode](https://adventofcode.com), create a directory for this day and some template files to solve the puzzle in a given language.
 
