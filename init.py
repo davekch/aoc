@@ -1,4 +1,5 @@
 import os
+from glob import glob1
 import sys
 from shutil import copyfile
 import requests
@@ -19,18 +20,26 @@ parser.add_argument("--no-download", dest="skip_download", action="store_true")
 args = parser.parse_args()
 
 
+lang_files = {
+    "cpp": ["*.cpp", "*.hpp", "*.h", "Makefile"],
+}
+
+
 def setup_dir():
     newdir = "day{}".format(args.day)
     if not os.path.exists(newdir):
         os.mkdir(newdir)
         logger.info("created a new directory {}".format(newdir))
     for lang in args.language:
-        templates = [f for f in os.listdir("templates") if f".{lang}" in f]
-        for t in templates:
-            if t in os.listdir(newdir):
-                logger.warning(f"{newdir} already contains {t}, skipping")
-            else:
-                copyfile(os.path.join("templates", t), os.path.join(newdir, t))
+        # check if there are multiple filetypes for that language, otherwise
+        # we just copy everything that matches *.lang
+        wildcards = lang_files.get(lang, [f"*.{lang}"])
+        for wc in wildcards:
+            for t in glob1("templates", wc):
+                if t in os.listdir(newdir):
+                    logger.warning(f"{newdir} already contains {t}, skipping")
+                else:
+                    copyfile(os.path.join("templates", t), os.path.join(newdir, t))
     logger.info(f"done copying templates to {newdir}")
 
 
