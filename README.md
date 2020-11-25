@@ -1,4 +1,4 @@
-# AoC 2020
+# AoC
 
 ## Templates and download script
 
