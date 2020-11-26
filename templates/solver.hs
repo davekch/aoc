@@ -1,12 +1,13 @@
 import Data.List
+import Utils
 
-getInput :: IO [String]
+getInput :: IO String
 getInput = do
     contents <- readFile "input.txt"
-    return $ lines contents
+    return contents
 
 
-parse :: [String] -> a
+parse :: String -> a
 parse input = undefined
 
 
