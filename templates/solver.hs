@@ -19,6 +19,13 @@ solve2 :: a -> String
 solve2 parsed = undefined
 
 
+testdata = ""
+testresult1 = ""
+testresult2 = ""
+test1 = test (solve1 . parse) testdata testresult1
+test2 = test (solve2 . parse) testdata testresult2
+
+
 main = do 
     raw_input <- getInput
     let parsed = parse raw_input
