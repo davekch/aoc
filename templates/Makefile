@@ -1,4 +1,8 @@
 CXX := g++
+UTIL_DIR = ../utils
+SRC = Solver.cpp $(UTIL_DIR)/Utils.cpp
+OBJ = $(SRC:.cpp = .o)
+CFLAGS = -I$(UTIL_DIR) -O
 
 
 all: test solver run clean
@@ -6,14 +10,14 @@ all: test solver run clean
 run: solver
 	./solver
 
-solver: Solver.cpp
-	$(CXX) -o solver Solver.cpp
+solver: $(OBJ)
+	$(CXX) $(CFLAGS) -o $@ $(OBJ)
 	
 test: runner
 	./runner
 
-runner: runner.cpp
-	$(CXX) -o $@ $<
+runner: runner.cpp Solver.hpp $(UTIL_DIR)/Utils.cpp
+	$(CXX) $(CFLAGS) -o $@ $^
 
 runner.cpp: SolverTestSuite.hpp
 	cxxtestgen -o $@ --error-printer $^
