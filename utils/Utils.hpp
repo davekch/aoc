@@ -18,6 +18,8 @@ namespace util {
         std::vector<String> splitAt(std::string);
     };
     
+    std::vector<int> parse_ints(std::vector<String>);
+    
 }
 
 

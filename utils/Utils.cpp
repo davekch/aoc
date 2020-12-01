@@ -24,3 +24,12 @@ std::vector<util::String> util::String::splitAt(std::string delimiter) {
     parts.push_back(util::String(data.substr(last)));
     return parts;
 }
+
+std::vector<int> util::parse_ints(std::vector<util::String> strints) {
+    // convert a vector of Strings to a vector of Ints
+    std::vector<int> ints;
+    for (util::String strint : strints) {
+        ints.push_back(std::stoi(strint.get_data()));
+    }
+    return ints;
+}
