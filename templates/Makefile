@@ -1,26 +1,27 @@
 CXX := g++
 UTIL_DIR = ../utils
-SRC = Solver.cpp $(UTIL_DIR)/Utils.cpp
+INC_DIR = ../include
+SRC = Main.cpp Solver.cpp $(UTIL_DIR)/Utils.cpp
 OBJ = $(SRC:.cpp = .o)
-CFLAGS = -I$(UTIL_DIR) -O
+CFLAGS = -I$(UTIL_DIR) -I$(INC_DIR) -O
 
 
-all: test solver run clean
+all: test main run clean
 	
-run: solver
-	./solver
+run: main
+	./main
 
-solver: $(OBJ)
+main: $(OBJ)
 	$(CXX) $(CFLAGS) -o $@ $(OBJ)
 	
 test: runner
 	./runner
 
-runner: runner.cpp Solver.hpp $(UTIL_DIR)/Utils.cpp
+runner: runner.cpp Solver.cpp $(UTIL_DIR)/Utils.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
 
 runner.cpp: SolverTestSuite.hpp
 	cxxtestgen -o $@ --error-printer $^
 
 clean:
-	rm runner.cpp runner
+	rm runner.cpp runner main

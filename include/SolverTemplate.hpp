@@ -4,7 +4,7 @@
 
 template <typename T, typename U>
 class AocSolver {
-    private:
+    protected:
         std::string raw_data;
         T parsed_data;
     public:

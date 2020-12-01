@@ -1,13 +1,14 @@
-#include <iostream>
 #include "Solver.hpp"
 
+void Solver::parse_data() {
+    // parse this->raw_data into this->parsed_data
+    parsed_data = util::String(raw_data);
+}
 
-int main() {
-    Solver solver = Solver();
-    solver.read_input("input.txt");
-    solver.parse_data();
-    
-    std::cout << "Part 1: " << solver.solve1() << std::endl;
-    std::cout << "Part 1: " << solver.solve2() << std::endl;
+int Solver::solve1() {
+    return 0;
+}
+
+int Solver::solve2() {
     return 0;
 }
