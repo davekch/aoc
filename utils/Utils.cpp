@@ -29,6 +29,8 @@ std::vector<int> util::parse_ints(std::vector<util::String> strints) {
     // convert a vector of Strings to a vector of Ints
     std::vector<int> ints;
     for (util::String strint : strints) {
+        if (strint.get_data().empty())
+            continue;
         ints.push_back(std::stoi(strint.get_data()));
     }
     return ints;
