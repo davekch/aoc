@@ -20,7 +20,7 @@ test: runner
 runner: runner.cpp Solver.cpp $(UTIL_DIR)/Utils.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
 
-runner.cpp: SolverTestSuite.hpp
+runner.cpp: SolverTestSuite.hpp $(INC_DIR)/SolverTemplate.hpp
 	cxxtestgen -o $@ --error-printer $^
 
 clean:

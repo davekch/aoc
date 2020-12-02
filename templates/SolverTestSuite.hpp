@@ -13,10 +13,10 @@ public:
     }
     
     void test_solve1() {
-        TS_ASSERT_EQUALS(testSolver.solve1(), 0);
+        ETS_ASSERT_EQUALS(testSolver.solve1(), 0);
     }
     
     void test_solve2() {
-        TS_ASSERT_EQUALS(testSolver.solve2(), 0);
+        ETS_ASSERT_EQUALS(testSolver.solve2(), 0);
     }
 };
