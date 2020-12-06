@@ -1,11 +1,13 @@
 module Utils
 ( parseInts
 , test
+, groupByEmptyLines
 ) where
 
 import Data.Function (on)
 import Data.Char
 import Data.List
+import Data.List.Split (splitOn)
 import Text.Read
 
 
@@ -16,6 +18,12 @@ parseInts = foldr getInt [] . groupBy ((==) `on` isDigit)
         getInt str ls = case (readMaybe str) of 
             Nothing -> ls
             Just n -> n:ls
+
+
+-- splits a string by lines but parts which are seperated by an empty
+-- line are grouped together
+groupByEmptyLines :: String -> [[String]]
+groupByEmptyLines = map lines . splitOn "\n\n"
 
 
 data TestResult a = Ok | Fail a a
@@ -30,4 +38,3 @@ test f expected x
     | otherwise = Fail expected out
     where
         out = f x
-
