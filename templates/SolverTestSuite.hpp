@@ -7,6 +7,7 @@ private:
     Solver testSolver;
 public:
     void setUp() {
+        testSolver = Solver();
         std::string testdata = "test test test";
         testSolver.set_input(testdata);
         testSolver.parse_data();
