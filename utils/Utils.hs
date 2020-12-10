@@ -2,6 +2,7 @@ module Utils
 ( parseInts
 , test
 , groupByEmptyLines
+, diff
 , Command
 , BootStatus (INFLOOP, DONE)
 , strToCommand
@@ -19,7 +20,7 @@ import Text.Read
 parseInts :: String  -> [Int]
 parseInts = foldr getInt [] . groupBy ((==) `on` isDigit)
     where
-        getInt str ls = case (readMaybe str) of 
+        getInt str ls = case (readMaybe str) of
             Nothing -> ls
             Just n -> n:ls
 
@@ -43,8 +44,13 @@ test f expected x
     where
         out = f x
 
-        
-        
+
+diff :: (Num a) => [a] -> [a]
+diff []     = []
+diff (_:[]) = []
+diff (x1:x2:xs) = (x2-x1) : diff (x2:xs)
+
+
 -- ========================= bootloader ======================
 data Instruction = NOP | ACC | JMP
 data Command = Command Instruction Int
