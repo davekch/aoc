@@ -46,6 +46,29 @@ bool util::String::equals(std::string other) {
 }
 
 
+std::vector<int> util::diff(std::vector<int> in) {
+    std::vector<int> diff(in.size()-1);
+    for (int i=0; i<diff.size(); i++) {
+        diff[i] = in[i+1] - in[i];
+    }
+    return diff;
+}
+
+unsigned long long int util::n_tuples_or_triples(int n) {
+    // number of ways to combine two or three subsequent elements
+    // in a n long sequence, eg (..)...(..)(...)
+    if (n <= 1)
+        return 1;
+    if (n == 2)
+        return 2;
+    if (n == 3)
+        return 4;
+    return util::n_tuples_or_triples(n-1)
+         + util::n_tuples_or_triples(n-2)
+         + util::n_tuples_or_triples(n-3);
+}
+
+
 /* -------- BOOTLOADER ------ */
 
 Command str_to_command(std::string input) {
@@ -83,7 +106,7 @@ BootStatus BootLoader::run() {
         // if we were already at pos, we are in an infinite loop and need to stop
         if (std::find(history.begin(), history.end(), pos) != history.end())
             return BootStatus::INFLOOP;
-            
+
         history.push_back(pos);
         switch (code[pos].instruction) {
             case Instruction::NOP:

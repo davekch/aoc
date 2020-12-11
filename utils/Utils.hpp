@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace util {
-    
+
     class String {
     private:
         std::string data;
@@ -19,8 +19,12 @@ namespace util {
         int asint();
         bool equals(std::string);
     };
-    
+
     std::vector<int> parse_ints(std::vector<String>);
+
+    std::vector<int> diff(std::vector<int>);
+
+    unsigned long long int n_tuples_or_triples(int);
 
 }
 
