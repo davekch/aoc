@@ -33,9 +33,8 @@ test2 = test (solve2 . parse) testresult2 testdata
 
 
 main = do
-    raw_input <- getInput
-    let parsed = parse raw_input
-    let sol1 = solve1 parsed
-    putStrLn ("Part 1: " ++ show sol1)
-    let sol2 = solve2 parsed
-    putStrLn ("Part 2: " ++ show sol2)
+    parsed <- parse <$> getInput
+    putStr "Part 1: "
+    print . solve1 $ parsed
+    putStr "Part 2: "
+    print . solve2 $ parsed
