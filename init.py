@@ -12,25 +12,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-parser = ArgumentParser()
-parser.add_argument("-d", "--day", default=date.today().day, type=int)
-parser.add_argument("-y", "--year", default=date.today().year, type=int)
-parser.add_argument("-l", "--language", default=["py"], nargs="+")
-parser.add_argument("--no-download", dest="skip_download", action="store_true")
-args = parser.parse_args()
-
-
 lang_files = {
     "cpp": ["*.cpp", "*.hpp", "*.h", "Makefile"],
 }
 
 
-def setup_dir():
-    newdir = "day{}".format(args.day)
+def setup_dir(day, languages):
+    newdir = f"day{day:02d}"
     if not os.path.exists(newdir):
         os.mkdir(newdir)
-        logger.info("created a new directory {}".format(newdir))
-    for lang in args.language:
+        logger.info(f"created a new directory {newdir}")
+    for lang in languages:
         # check if there are multiple filetypes for that language, otherwise
         # we just copy everything that matches *.lang
         wildcards = lang_files.get(lang, [f"*.{lang}"])
@@ -43,16 +35,17 @@ def setup_dir():
     logger.info(f"done copying templates to {newdir}")
 
 
-def get_input():
+def get_input(day, year):
     if not "AOC_SESSION" in os.environ:
         logger.warning("no environment variable 'AOC_SESSION' found! skipping download")
         return
     else:
         cookie = os.environ["AOC_SESSION"]
-        
-    url = "https://adventofcode.com/{}/day/{}/input".format(args.year, args.day)
-    if "input.txt" in os.listdir(f"day{args.day}"):
-        logger.warning(f"day{args.day}/input.txt already exists, skip download")
+
+    url = "https://adventofcode.com/{}/day/{}/input".format(year, day)
+    dayfolder = f"day{day:02d}"
+    if "input.txt" in os.listdir(dayfolder):
+        logger.warning(f"{dayfolder}/input.txt already exists, skip download")
         return
 
     logger.info("download input from {}... ".format(url))
@@ -64,7 +57,7 @@ def get_input():
         )
         if response.ok:
             data = response.text
-            f = open(os.path.join(f"day{args.day}", "input.txt"), "w+")
+            f = open(os.path.join(dayfolder, "input.txt"), "w+")
             f.write(data.rstrip("\n"))
             f.close()
             logger.info("... done!")
@@ -75,6 +68,13 @@ def get_input():
 
 
 if __name__ == "__main__":
-    setup_dir()
+    parser = ArgumentParser()
+    parser.add_argument("-d", "--day", default=date.today().day, type=int)
+    parser.add_argument("-y", "--year", default=date.today().year, type=int)
+    parser.add_argument("-l", "--language", default=["py"], nargs="+")
+    parser.add_argument("--no-download", dest="skip_download", action="store_true")
+    args = parser.parse_args()
+
+    setup_dir(args.day, args.language)
     if not args.skip_download:
-        get_input()
+        get_input(args.day, args.year)
