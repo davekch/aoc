@@ -1,7 +1,8 @@
 from functools import wraps
 from datetime import datetime
 
-total_time = []
+
+times = []
 
 
 def measure_time(func):
@@ -10,7 +11,7 @@ def measure_time(func):
         start = datetime.now()
         result = func(*args, **kwargs)
         end = datetime.now()
-        total_time.append((end - start).total_seconds())
+        times.append((func.__name__, (end - start).total_seconds()))
         return result
 
     return _func
@@ -40,4 +41,8 @@ if __name__ == "__main__":
     print("Part 1: {}".format(solve1(data)))
     print("Part 2: {}".format(solve2(data)))
 
-    print("total time: {}s".format(sum(total_time)))
+    print("\nTime taken:")
+    for func, time in times:
+        print(f"{func:8}{time}s")
+    print("----------------")
+    print("total   {}s".format(sum(t for _, t in times)))
