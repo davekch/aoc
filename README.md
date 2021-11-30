@@ -32,3 +32,47 @@ If no day / year is given, the current date is used. `language` defaults to `py`
 $ export AOC_SESSION=your-session-id
 $ python3 init.py -l cpp
 ```
+
+### Notes
+
+#### Python
+Templates are in `templates/py`
+
+```bash
+$ python init.py
+$ cd dayXX
+$ pytest
+$ python solver.py
+```
+
+#### C++
+Templates are in `templates/cpp`
+
+```bash
+$ python init.py -l cpp
+$ cd dayXX
+$ make test
+$ make run
+```
+
+Utilities are in `utils/cpp`. `cd utils/cpp; make` to test Utils.cpp
+
+
+#### Haskell
+Templates are in `templates/hs`
+
+```bash
+$ python init.py -l hs
+$ cd dayXX
+$ ghc -i../utils/hs solver.hs
+$ ./solver
+```
+
+Testing can be done in the repl:
+```
+$ ghci -i../utils/hs solver.hs
+λ> test1
+λ> test2
+```
+
+Utilities are in `utils/hs`
