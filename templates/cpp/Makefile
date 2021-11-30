@@ -1,6 +1,6 @@
 CXX := g++
-UTIL_DIR = ../utils
-INC_DIR = ../include
+UTIL_DIR = ../utils/cpp
+INC_DIR = ../utils/cpp
 SRC = Main.cpp Solver.cpp $(UTIL_DIR)/Utils.cpp
 OBJ = $(SRC:.cpp = .o)
 CFLAGS = -I$(UTIL_DIR) -I$(INC_DIR) -O

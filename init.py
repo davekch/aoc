@@ -12,26 +12,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-lang_files = {
-    "cpp": ["*.cpp", "*.hpp", "*.h", "Makefile"],
-}
-
 
 def setup_dir(day, languages):
     newdir = f"day{day:02d}"
     if not os.path.exists(newdir):
         os.mkdir(newdir)
         logger.info(f"created a new directory {newdir}")
+    lang_dirs = os.listdir("templates")
     for lang in languages:
-        # check if there are multiple filetypes for that language, otherwise
-        # we just copy everything that matches *.lang
-        wildcards = lang_files.get(lang, [f"*.{lang}"])
-        for wc in wildcards:
-            for t in glob1("templates", wc):
-                if t in os.listdir(newdir):
-                    logger.warning(f"{newdir} already contains {t}, skipping")
-                else:
-                    copyfile(os.path.join("templates", t), os.path.join(newdir, t))
+        if lang not in lang_dirs:
+            logger.error(f"no template files found for {lang}; available: {', '.join(lang_dirs)}")
+            continue
+        template_dir = os.path.join("templates", lang)
+        for file in os.listdir(template_dir):
+            if file in os.listdir(newdir):
+                logger.warning(f"{newdir} already contains {file}, skipping")
+            else:
+                copyfile(os.path.join(template_dir, file), os.path.join(newdir, file))
     logger.info(f"done copying templates to {newdir}")
 
 
