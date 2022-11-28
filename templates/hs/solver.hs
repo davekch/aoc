@@ -1,5 +1,6 @@
 import Data.List
 import Utils
+import Utils (CLIOptions, clioptions)
 
 getInput :: IO String
 getInput = do
@@ -31,10 +32,26 @@ testresult2 = 0
 test1 = test (solve1 . parse) testresult1 testdata
 test2 = test (solve2 . parse) testresult2 testdata
 
+printPart :: (Show a) => Int -> a -> IO ()
+printPart part solution = do
+    putStr $ "Part " ++ (show part) ++ ": "
+    print solution
 
-main = do
+main' :: CLIOptions -> IO ()
+main' (CLIOptions p False) = do
     parsed <- parse <$> getInput
-    putStr "Part 1: "
-    print . solve1 $ parsed
-    putStr "Part 2: "
-    print . solve2 $ parsed
+    case p of
+        1 -> printPart 1 (solve1 parsed)
+        2 -> printPart 2 (solve2 parsed)
+        _ -> (do
+            printPart 1 (solve1 parsed)
+            printPart 2 (solve2 parsed))
+main' (CLIOptions p True) = do
+    case p of
+        1 -> printPart 1 test1
+        2 -> printPart 2 test2
+        _ -> (do
+            printPart 1 test1
+            printPart 2 test2)
+
+main = main' =<< clioptions
