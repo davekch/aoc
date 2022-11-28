@@ -68,11 +68,13 @@ $ ghc -i../utils/hs solver.hs
 $ ./solver
 ```
 
-Testing can be done in the repl:
+Run tests with `./solver --test` or in the repl:
 ```
 $ ghci -i../utils/hs solver.hs
 λ> test1
 λ> test2
 ```
+
+You can also run only part one or two with `./solver --part 1`.
 
 Utilities are in `utils/hs`
