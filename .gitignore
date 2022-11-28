@@ -3,4 +3,7 @@
 *.cache
 *.pyc
 *.swp
+*.o
+*.hi
+*solver
 aoc_session.sh
