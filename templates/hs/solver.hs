@@ -1,3 +1,6 @@
+{-# LANGUAGE QuasiQuotes #-}
+
+import Text.RawString.QQ 
 import Data.List
 import Utils as U
 import Utils (CLIOptions, clioptions)
@@ -20,7 +23,8 @@ solve1 parsed = undefined
 solve2 :: Parsed -> Sol2
 solve2 parsed = undefined
 
-testdata = ""
+
+testdata = [r||]
 testresult1 = 0
 testresult2 = 0
 

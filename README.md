@@ -61,6 +61,8 @@ Utilities are in `utils/cpp`. `cd utils/cpp; make` to test Utils.cpp
 #### Haskell
 Templates are in `templates/hs`
 
+dependencies: `cabal install split optparse-applicative raw-strings-qq`
+
 ```bash
 $ python init.py -l hs
 $ cd dayXX
