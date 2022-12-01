@@ -50,7 +50,7 @@ def get_input(day, year):
         response = requests.get(
             url=url,
             cookies={"session": cookie},
-            headers={"User-Agent": "get_input_script"},
+            headers={"User-Agent": "https://github.com/davekch/aoc by dave-koch@web.de"},
         )
         if response.ok:
             data = response.text
