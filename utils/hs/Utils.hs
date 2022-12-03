@@ -3,6 +3,7 @@ module Utils
 , test
 , groupByEmptyLines
 , diff
+, intersections
 , Point2D (Point2D)
 , turnL
 , turnR
@@ -15,6 +16,8 @@ import Data.Function (on)
 import Data.Char
 import Data.List
 import Data.List.Split (splitOn)
+import qualified Data.Set as Set
+import Data.Set (Set)
 import Options.Applicative
 import Text.Read
 
@@ -32,6 +35,11 @@ parseInts = foldr getInt [] . groupBy ((==) `on` isDigit)
 -- line are grouped together
 groupByEmptyLines :: String -> [[String]]
 groupByEmptyLines = map lines . splitOn "\n\n"
+
+
+-- get common elements from a list of sets
+intersections :: Ord a => [Set a] -> Set a
+intersections ss = foldl Set.intersection (head ss) (tail ss)
 
 
 data TestResult a = Ok | Fail a a
