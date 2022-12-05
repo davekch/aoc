@@ -4,6 +4,8 @@ module Utils
 , groupByEmptyLines
 , diff
 , intersections
+, takeEvery
+, linesWith
 , Point2D (Point2D)
 , turnL
 , turnR
@@ -41,6 +43,15 @@ groupByEmptyLines = map lines . splitOn "\n\n"
 intersections :: Ord a => [Set a] -> Set a
 intersections ss = foldl Set.intersection (head ss) (tail ss)
 
+
+-- take every nth element from a list
+takeEvery :: Int -> [a] -> [a]
+takeEvery n [] = []
+takeEvery n (x:ls) = x : takeEvery n (drop (n-1) ls)
+
+
+linesWith :: (String -> a) -> String -> [a]
+linesWith f = map f . lines
 
 data TestResult a = Ok | Fail a a
 
