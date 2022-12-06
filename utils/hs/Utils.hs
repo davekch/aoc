@@ -6,6 +6,9 @@ module Utils
 , intersections
 , takeEvery
 , linesWith
+, unique
+, slide
+, slideWith
 , Point2D (Point2D)
 , turnL
 , turnR
@@ -52,6 +55,20 @@ takeEvery n (x:ls) = x : takeEvery n (drop (n-1) ls)
 
 linesWith :: (String -> a) -> String -> [a]
 linesWith f = map f . lines
+
+
+-- check whether all elements in a list are unique
+unique :: Ord a => [a] -> Bool
+unique ls = length ls == Set.size (Set.fromList ls)
+
+-- sliding window with window size n
+slide :: Int -> [a] -> [[a]]
+slide n [] = []
+slide n ls = take n ls : slide n (tail ls)
+
+-- sliding window but also apply f
+slideWith :: ([a] -> b) -> Int -> [a] -> [b]
+slideWith f n = map f . slide n
 
 data TestResult a = Ok | Fail a a
 
