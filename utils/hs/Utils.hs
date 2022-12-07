@@ -1,3 +1,6 @@
+{-# LANGUAGE DeriveFoldable #-}
+{-# LANGUAGE DeriveTraversable #-}
+
 module Utils
 ( parseInts
 , test
@@ -9,6 +12,12 @@ module Utils
 , unique
 , slide
 , slideWith
+, Tree (Tree, Node)
+, getValue
+, isNode
+, walk
+, walkBy
+, prettyShow
 , Point2D (Point2D)
 , turnL
 , turnR
@@ -69,6 +78,46 @@ slide n ls = take n ls : slide n (tail ls)
 -- sliding window but also apply f
 slideWith :: ([a] -> b) -> Int -> [a] -> [b]
 slideWith f n = map f . slide n
+
+
+data Tree a = Node a | Tree a [Tree a] deriving (Show, Eq, Foldable)
+
+instance Functor Tree where
+    fmap f (Tree x children) = Tree (f x) (map (fmap f) children)
+    fmap f (Node x) = Node (f x)
+
+getValue :: Tree a -> a
+getValue (Node x) = x
+getValue (Tree x _) = x
+
+-- try do to down the tree according to the values in the list
+-- eg walk [1,2,3] Tree 1 [Tree 2 [Node 3], Node 4, Tree 5 []]
+-- would return Just Node 3
+walk :: Eq a => [a] -> Tree a -> Maybe (Tree a)
+walk = walkBy (==)
+
+-- see walk
+walkBy :: (a -> b -> Bool) -> [b] -> Tree a -> Maybe (Tree a)
+walkBy f (x:[]) tree = if f (getValue tree) x then Just tree else Nothing
+walkBy f (x1:x2:xs) tree = case tree of
+    Node _ -> Nothing  -- we can't walk into a node
+    Tree y children -> if f y x1
+        then
+            case find ((flip f x2) . getValue) children of
+                Just subtree -> walkBy f (x2:xs) subtree
+                Nothing -> Nothing
+        else
+            Nothing
+
+isNode :: Tree a -> Bool
+isNode (Node _) = True
+isNode _ = False
+
+prettyShow :: Show a => Tree a -> String
+prettyShow tree = prettyShow' 0 tree ++ "\n"
+    where
+        prettyShow' depth node@(Node _) = replicate depth ' ' ++ show node
+        prettyShow' depth (Tree x children) = replicate depth ' ' ++ "Tree " ++ show x ++ " [\n" ++ (intercalate "\n" $ map (prettyShow' (depth + 4)) children) ++ "\n" ++ replicate depth ' ' ++ "]"
 
 data TestResult a = Ok | Fail a a
 
