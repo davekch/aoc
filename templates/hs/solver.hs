@@ -2,8 +2,8 @@
 
 import Text.RawString.QQ 
 import Data.List
-import Utils as U
-import Utils (CLIOptions, clioptions)
+import Utils
+import AoC
 
 getInput :: IO String
 getInput = readFile "input.txt"
