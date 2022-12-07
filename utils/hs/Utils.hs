@@ -9,7 +9,6 @@ import Data.List
 import Data.List.Split (splitOn)
 import qualified Data.Set as Set
 import Data.Set (Set)
-import Options.Applicative
 import Text.Read
 
 
@@ -57,6 +56,8 @@ slideWith :: ([a] -> b) -> Int -> [a] -> [b]
 slideWith f n = map f . slide n
 
 
+-------------------------------------------------- Tree stuff -----------
+
 data Tree a = Node a | Tree a [Tree a] deriving (Show, Eq, Foldable)
 
 instance Functor Tree where
@@ -96,19 +97,7 @@ prettyShow tree = prettyShow' 0 tree ++ "\n"
         prettyShow' depth node@(Node _) = replicate depth ' ' ++ show node
         prettyShow' depth (Tree x children) = replicate depth ' ' ++ "Tree " ++ show x ++ " [\n" ++ (intercalate "\n" $ map (prettyShow' (depth + 4)) children) ++ "\n" ++ replicate depth ' ' ++ "]"
 
-data TestResult a = Ok | Fail a a
-
-instance (Show a) => Show (TestResult a) where
-    show Ok = "Test passed."
-    show (Fail a b) = "Test failed! Expected " ++ show a ++ " but got " ++ show b
-
-test :: (Eq b) => (a -> b) -> b -> a -> TestResult b
-test f expected x
-    | out == expected = Ok
-    | otherwise = Fail expected out
-    where
-        out = f x
-
+------------------------------------------- end of tree stuff -------------
 
 diff :: (Num a) => [a] -> [a]
 diff []     = []
@@ -133,33 +122,3 @@ turnL dir turns = turnL (turnL dir 1) (turns-1)
 
 manhattan :: (Num a) => Point2D a -> a
 manhattan (Point2D x y) = abs x + abs y
-
--- ============================================== CLI option parser
-
-data CLIOptions = CLIOptions
-    { clipart :: Int
-    , clitest :: Bool
-    }
-    deriving (Show)
-
-cliparser :: Parser CLIOptions
-cliparser =
-    CLIOptions
-        <$> option auto
-            ( long "part"
-            <> short 'p'
-            <> metavar "PART"
-            <> help "specify a part"
-            <> value 0
-            )
-        <*> switch
-            ( long "test"
-            <> short 't'
-            <> help "run tests"
-            )
-
-
-clioptions :: IO CLIOptions
-clioptions = execParser options
-    where
-        options = info (cliparser <**> helper) fullDesc
