@@ -46,6 +46,8 @@ $ python solver.py
 ```
 
 #### C++
+requires `cxxtest`: `sudo apt-get install cxxtest`
+
 Templates are in `templates/cpp`
 
 ```bash
