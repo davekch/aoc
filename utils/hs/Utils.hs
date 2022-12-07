@@ -1,30 +1,7 @@
 {-# LANGUAGE DeriveFoldable #-}
 {-# LANGUAGE DeriveTraversable #-}
 
-module Utils
-( parseInts
-, test
-, groupByEmptyLines
-, diff
-, intersections
-, takeEvery
-, linesWith
-, unique
-, slide
-, slideWith
-, Tree (Tree, Node)
-, getValue
-, isNode
-, walk
-, walkBy
-, prettyShow
-, Point2D (Point2D)
-, turnL
-, turnR
-, manhattan
-, clioptions
-, CLIOptions (CLIOptions)
-) where
+module Utils where
 
 import Data.Function (on)
 import Data.Char
