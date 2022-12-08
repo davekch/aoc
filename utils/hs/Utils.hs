@@ -56,6 +56,13 @@ slideWith :: ([a] -> b) -> Int -> [a] -> [b]
 slideWith f n = map f . slide n
 
 
+enumerate :: [a] -> [(Int, a)]
+enumerate = zip [0..]
+
+takeWhileInclusive :: (a -> Bool) -> [a] -> [a]
+takeWhileInclusive _ [] = []
+takeWhileInclusive f (x:xs) = x : if f x then takeWhileInclusive f xs else []
+
 -------------------------------------------------- Tree stuff -----------
 
 data Tree a = Node a | Tree a [Tree a] deriving (Show, Eq, Foldable)
