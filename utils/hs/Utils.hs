@@ -63,6 +63,10 @@ takeWhileInclusive :: (a -> Bool) -> [a] -> [a]
 takeWhileInclusive _ [] = []
 takeWhileInclusive f (x:xs) = x : if f x then takeWhileInclusive f xs else []
 
+applyN :: Int -> (a -> a) -> a -> a
+applyN 0 f x = x
+applyN n f x = applyN (n-1) f (f x)
+
 -------------------------------------------------- Tree stuff -----------
 
 data Tree a = Node a | Tree a [Tree a] deriving (Show, Eq, Foldable)
@@ -110,22 +114,3 @@ diff :: (Num a) => [a] -> [a]
 diff []     = []
 diff (_:[]) = []
 diff (x1:x2:xs) = (x2-x1) : diff (x2:xs)
-
-
--- ==================================================== 2D geometry
-data Point2D a = Point2D { x :: a, y :: a } deriving (Show, Eq)
-
--- rotate a Point2D to the right by 90 degrees n times
-turnR :: (Num a) => Point2D a -> Int -> Point2D a
-turnR dir 0 = dir
-turnR (Point2D x y) 1 = Point2D y (-x) 
-turnR dir turns = turnR (turnR dir 1) (turns-1)
-
--- rotate a Point2D to the left by 90 degrees n times
-turnL :: (Num a) => Point2D a -> Int -> Point2D a
-turnL dir 0 = dir
-turnL (Point2D x y) 1 = Point2D (-y) x 
-turnL dir turns = turnL (turnL dir 1) (turns-1)
-
-manhattan :: (Num a) => Point2D a -> a
-manhattan (Point2D x y) = abs x + abs y
