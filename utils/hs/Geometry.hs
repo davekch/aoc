@@ -4,6 +4,8 @@ import qualified Data.Vector as Vec
 import Data.Vector (Vector)
 import qualified Data.Map as Map
 import Data.Map (Map)
+import Data.Function (on)
+import Data.Foldable (maximumBy, minimumBy)
 
 
 type Grid a b = Map (Vector a) b
@@ -64,3 +66,27 @@ gridFromString input = Map.fromList (index enumerated)
         index = concat . map indexLine
         indexLine ((_, [])) = []
         indexLine ((y, (x, v):vs)) = (mkVec [x,y], v) : indexLine (y, vs)
+
+-- get the edges of a 2D grid
+gridEdges :: Grid Int a -> (Int, Int, Int, Int)
+gridEdges grid = (minx, maxx, miny, maxy)
+    where
+        minx = (Vec.! 0) . minimumBy (compare `on` (Vec.! 0)) . Map.keys $ grid
+        maxx = (Vec.! 0) . maximumBy (compare `on` (Vec.! 0)) . Map.keys $ grid
+        miny = (Vec.! 1) . minimumBy (compare `on` (Vec.! 1)) . Map.keys $ grid
+        maxy = (Vec.! 1) . maximumBy (compare `on` (Vec.! 1)) . Map.keys $ grid
+
+-- turns a 2D grid into a string
+prettyShow :: String -> Grid Int String -> String
+prettyShow emptyfill grid = unlines . reverse $ map concat ls
+    where
+        (minx, maxx, miny, maxy) = gridEdges grid
+        ls = [
+                [
+                    case (mkVec [x, y]) `Map.lookup` grid of
+                        Nothing -> emptyfill
+                        Just a -> a
+                    | x <- [minx..maxx]
+                ]
+                | y <- [miny..maxy]
+            ]
