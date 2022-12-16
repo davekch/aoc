@@ -1,9 +1,40 @@
 from datetime import datetime
 from functools import wraps
+from queue import Queue
+from bidict import bidict
 from typing import Dict, Any
 
 from rich.traceback import install
 install(show_locals=False)
+
+
+def BFS(graph, start, neighbors_func):
+    """breadth first search on graph. neighbors_func should
+    take the graph and a point and return a list of adjacent points
+    """
+    queue = Queue()
+    queue.put(start)
+    path = {start: None}
+    while not queue.empty():
+        v = queue.get()
+        for n in neighbors_func(graph, v):
+            if n not in path:
+                path[n] = v
+                queue.put(n)
+    return path
+
+
+def shortestpath(bfs_result, start, end) -> list:
+    """takes a dict as returned from BFS and returns the
+    shortest path from start to end"""
+    if end not in bfs_result:
+        return []
+    path = [end]
+    while parent:=bfs_result[path[-1]]:
+        path.append(parent)
+        if parent == start:
+            break
+    return list(reversed(path))
 
 
 def corners(grid: Dict[tuple[int], Any]):
