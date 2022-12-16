@@ -69,15 +69,13 @@ applyN n f x = applyN (n-1) f (f x)
 
 -------------------------------------------------- Tree stuff -----------
 
-data Tree a = Node a | Tree a [Tree a] deriving (Show, Eq, Foldable)
+data Tree a = Node { getValue :: a }
+            | Tree { getValue :: a, getChildren :: [Tree a] }
+            deriving (Show, Eq, Foldable)
 
 instance Functor Tree where
     fmap f (Tree x children) = Tree (f x) (map (fmap f) children)
     fmap f (Node x) = Node (f x)
-
-getValue :: Tree a -> a
-getValue (Node x) = x
-getValue (Tree x _) = x
 
 -- try do to down the tree according to the values in the list
 -- eg walk [1,2,3] Tree 1 [Tree 2 [Node 3], Node 4, Tree 5 []]
