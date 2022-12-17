@@ -23,6 +23,12 @@ vsub = Vec.zipWith (-)
 dot :: Num a => Vector a -> Vector a -> a
 dot x y = Vec.sum $ Vec.zipWith (*) x y
 
+left, right, down, up :: Num a => Vector a -> Vector a
+left  = vadd (mkVec [-1,  0])
+right = vadd (mkVec [1, 0])
+down  = vadd (mkVec [0, -1])
+up    = vadd (mkVec [0,  1])
+
 -- multiply matrix on vector; should work in N dimensions
 {-
     note on implementation:
