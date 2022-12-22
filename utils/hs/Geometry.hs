@@ -46,10 +46,16 @@ matmul mat v = (Vec.map dot mat) <*> (mkVec [v])
 manhattan :: (Num a) => Vector a -> Vector a -> a
 manhattan x y = Vec.sum . Vec.map abs $ vsub x y
 
+rot2D90, rot2D90' :: Vector (Vector Int)
 -- rotation matrix in 2D 90 degrees clockwise
 rot2D90 = mkVec [
         mkVec [0,  1],
         mkVec [-1, 0]
+    ]
+-- rotation matrix in 2D 90 degrees anticlockwise
+rot2D90' = mkVec [
+        mkVec [0,  -1],
+        mkVec [1, 0]
     ]
 
 ------------------------------------------------------------ Grid stuff --------------------------
