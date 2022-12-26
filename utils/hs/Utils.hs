@@ -112,3 +112,13 @@ diff :: (Num a) => [a] -> [a]
 diff []     = []
 diff (_:[]) = []
 diff (x1:x2:xs) = (x2-x1) : diff (x2:xs)
+
+
+-- get the coefficients a_i in base n of a base-10 number x
+-- x = sum_i a_i * n^i; the n^0 digit goes last
+baseCoefficients :: Int -> Int -> [Int]
+baseCoefficients n x = reverse $ baseCoefficients' n 0 x
+    where
+        baseCoefficients' n i x
+            | n ^ i > x = []
+            | otherwise = (x `div` (n^i)) `mod` n : baseCoefficients' n (i+1) x
