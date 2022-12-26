@@ -7,15 +7,24 @@ from rich.traceback import install
 install(show_locals=False)
 
 
-def BFS(graph, start, neighbors_func):
+def BFS(graph, start, neighbors_func, finished=None, visualize=None):
     """breadth first search on graph. neighbors_func should
     take the graph and a point and return a list of adjacent points
+    optionally provide a function `finished` that terminates the search
+    once it returns true when called with the current node
     """
     queue = Queue()
     queue.put(start)
     path = {start: None}
     while not queue.empty():
         v = queue.get()
+
+        if visualize is not None:
+            visualize(graph, v)
+
+        if finished is not None and finished(v):
+            return path
+
         for n in neighbors_func(graph, v):
             if n not in path:
                 path[n] = v
