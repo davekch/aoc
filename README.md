@@ -51,7 +51,7 @@ Templates are in `templates/jl`
 ```bash
 $ python init.py -l jl
 $ cd dayXX
-$ julia solver.py
+$ julia solver.jl
 # or
 $ julia
 julia> include("solver.jl")
