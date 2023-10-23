@@ -45,6 +45,19 @@ $ pytest
 $ python solver.py
 ```
 
+#### Julia
+Templates are in `templates/jl`
+
+```bash
+$ python init.py -l jl
+$ cd dayXX
+$ julia solver.py
+# or
+$ julia
+julia> include("solver.jl")
+julia> test(); main()
+```
+
 #### C++
 requires `cxxtest`: `sudo apt-get install cxxtest`
 
