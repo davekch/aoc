@@ -51,12 +51,14 @@ Templates are in `templates/jl`
 ```bash
 $ python init.py -l jl
 $ cd dayXX
-$ julia solver.jl
-# or
 $ julia
-julia> include("solver.jl")
-julia> test(); main()
+julia> push!(LOAD_PATH, pwd())  # might not be needed
+julia> using Revise
+julia> using Solver
+julia> test()
+julia> main()
 ```
+code in `Solver.jl` gets hot reloaded, so code along and just keep your REPL running
 
 #### C++
 requires `cxxtest`: `sudo apt-get install cxxtest`

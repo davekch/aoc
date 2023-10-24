@@ -1,27 +1,13 @@
 using Test
 
-function parse_input(raw_data)
-    raw_data
-end
 
-function solve1(parsed)
-end
-
-function solve2(parsed)
-end
+# the functions here intentionally don't take arguments
+# this file is to be included at the end of each solver.jl module
+# to allow quick `main()` and `test()` calls in the REPL
+# parse_input, solve1, solve2, testinput, testanswer_{1,2} must
+# be defined in solver.jl
 
 
-# ------------------ testing ------------------ 
-testinput = """
-"""
-
-function test()
-    testparsed = parse_input(testinput)
-    @test solve1(testparsed) == 0
-    @test solve2(testparsed) == 0
-end
-
-# --------------------- main ------------------
 function main()
     raw_data = read("input.txt", String)
     t_p = @elapsed parsed = parse_input(raw_data)
@@ -37,7 +23,12 @@ function main()
     println("part 2 time: $t_2")
     println("        sum: $(t_p + t_1 + t_2)")
 end
+export main
 
 
-test()
-main()
+function test()
+    testparsed = parse_input(testinput)
+    @test solve1(testparsed) == testanswer_1
+    @test solve2(testparsed) == testanswer_2
+end
+export test
