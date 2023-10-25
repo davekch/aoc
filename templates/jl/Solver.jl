@@ -1,5 +1,8 @@
 module Solver
 
+include("../utils/jl/Utils.jl")
+using .Utils
+
 function parse_input(raw_data)
     raw_data
 end
