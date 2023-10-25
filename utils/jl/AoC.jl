@@ -8,14 +8,21 @@ using Test
 # be defined in solver.jl
 
 
-function main()
+function main(part=missing)
     raw_data = read("input.txt", String)
     t_p = @elapsed parsed = parse_input(raw_data)
-    t_1 = @elapsed part1 = solve1(parsed)
-    t_2 = @elapsed part2 = solve2(parsed)
-
-    println("part 1: $part1")
-    println("part 2: $part2")
+    if part === 1 || part === missing
+        t_1 = @elapsed part1 = solve1(parsed)
+        println("part 1: $part1")
+    else
+        t_1 = 0
+    end
+    if part === 2 || part === missing
+        t_2 = @elapsed part2 = solve2(parsed)
+        println("part 2: $part2")
+    else
+        t_2 = 0
+    end
 
     println("------------------")
     println(" parse time: $t_p")
@@ -26,9 +33,13 @@ end
 export main
 
 
-function test()
+function test(part=missing)
     testparsed = parse_input(testinput)
-    @test solve1(testparsed) == testanswer_1
-    @test solve2(testparsed) == testanswer_2
+    if part === 1 || part === missing
+        @info @test solve1(testparsed) == testanswer_1
+    end
+    if part === 2 || part === missing
+        @info @test solve2(testparsed) == testanswer_2
+    end
 end
 export test

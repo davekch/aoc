@@ -52,11 +52,11 @@ Templates are in `templates/jl`
 $ python init.py -l jl
 $ cd dayXX
 $ julia
-julia> push!(LOAD_PATH, pwd())  # might not be needed
+julia> push!(LOAD_PATH, pwd())
 julia> using Revise
 julia> using Solver
-julia> test()
-julia> main()
+julia> test()  # or test(1) or test(2)
+julia> main()  # or main(1) or test(2)
 ```
 code in `Solver.jl` gets hot reloaded, so code along and just keep your REPL running
 
