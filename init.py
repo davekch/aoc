@@ -12,22 +12,26 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+BASE_DIR = Path(__file__).parent
+TEMPLATES_DIR = BASE_DIR / "templates"
+
+
 def setup_dir(day, languages):
     newdir = Path(f"day{day:02d}")
     if not newdir.exists():
         os.mkdir(newdir)
         logger.info(f"created a new directory {newdir}")
-    lang_dirs = os.listdir("templates")
+    lang_dirs = os.listdir(TEMPLATES_DIR)
     for lang in languages:
         if lang not in lang_dirs:
             logger.error(f"no template files found for {lang}; available: {', '.join(lang_dirs)}")
             continue
-        template_dir = os.path.join("templates", lang)
+        template_dir = TEMPLATES_DIR / lang
         for file in os.listdir(template_dir):
             if file in os.listdir(newdir):
                 logger.warning(f"{newdir} already contains {file}, skipping")
             else:
-                copyfile(Path(template_dir) / file, newdir / file)
+                copyfile(template_dir / file, newdir / file)
     logger.info(f"done copying templates to {newdir}")
 
 
