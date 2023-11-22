@@ -1,28 +1,30 @@
 module Solver
+using Test
+using AoC
+using AoC.Utils
 
-include("../utils/jl/Utils.jl")
-using .Utils
 
-function parse_input(raw_data)
+function AoC.parse_input(raw_data)
     raw_data
 end
-export parse_input
 
-function solve1(parsed)
-end
-export solve1
 
-function solve2(parsed)
+function AoC.solve1(parsed)
 end
-export solve2
+
+
+function AoC.solve2(parsed)
+end
 
 
 testinput = """
 """
-testanswer_1 = 0
-testanswer_2 = 0
+testanswer_1 = nothing
+testanswer_2 = nothing
 export testinput, testanswer_1, testanswer_2
 
-include("../utils/jl/AoC.jl")
+test(part=missing) = AoC.test_solution(testinput, testanswer_1, testanswer_2, part)
+export test
+
 
 end # module Solver

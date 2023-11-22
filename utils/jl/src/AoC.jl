@@ -1,11 +1,19 @@
+module AoC
 using Test
 
+include("Utils.jl")
 
-# the functions here intentionally don't take arguments
-# this file is to be included at the end of each solver.jl module
-# to allow quick `main()` and `test()` calls in the REPL
-# parse_input, solve1, solve2, testinput, testanswer_{1,2} must
-# be defined in solver.jl
+
+abstract type AoCInput end
+abstract type AoCParsed end
+
+# define methods for these functions in each solver
+parse_input(i::AoCInput) = missing
+export parse_input
+solve1(p::AoCParsed) = missing
+export solve1
+solve2(p::AoCParsed) = missing
+export solve2
 
 
 function main(part=missing)
@@ -33,7 +41,7 @@ end
 export main
 
 
-function test(part=missing)
+function test_solution(testinput, testanswer_1, testanswer_2, part=missing)
     testparsed = parse_input(testinput)
     if part === 1 || part === missing
         @info @test solve1(testparsed) == testanswer_1
@@ -42,4 +50,7 @@ function test(part=missing)
         @info @test solve2(testparsed) == testanswer_2
     end
 end
-export test
+export test_solution
+
+
+end  # module AoC
