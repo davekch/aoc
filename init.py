@@ -1,6 +1,5 @@
 import os
-from glob import glob1
-import sys
+from pathlib import Path
 from shutil import copyfile
 import requests
 from datetime import date
@@ -14,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def setup_dir(day, languages):
-    newdir = f"day{day:02d}"
-    if not os.path.exists(newdir):
+    newdir = Path(f"day{day:02d}")
+    if not newdir.exists():
         os.mkdir(newdir)
         logger.info(f"created a new directory {newdir}")
     lang_dirs = os.listdir("templates")
@@ -28,7 +27,7 @@ def setup_dir(day, languages):
             if file in os.listdir(newdir):
                 logger.warning(f"{newdir} already contains {file}, skipping")
             else:
-                copyfile(os.path.join(template_dir, file), os.path.join(newdir, file))
+                copyfile(Path(template_dir) / file, newdir / file)
     logger.info(f"done copying templates to {newdir}")
 
 
@@ -39,13 +38,13 @@ def get_input(day, year):
     else:
         cookie = os.environ["AOC_SESSION"]
 
-    url = "https://adventofcode.com/{}/day/{}/input".format(year, day)
+    url = f"https://adventofcode.com/{year}/day/{day}/input"
     dayfolder = f"day{day:02d}"
     if "input.txt" in os.listdir(dayfolder):
         logger.warning(f"{dayfolder}/input.txt already exists, skip download")
         return
 
-    logger.info("download input from {}... ".format(url))
+    logger.info(f"download input from {url}... ")
     try:
         response = requests.get(
             url=url,
@@ -54,7 +53,7 @@ def get_input(day, year):
         )
         if response.ok:
             data = response.text
-            f = open(os.path.join(dayfolder, "input.txt"), "w+")
+            f = open(Path(dayfolder) / "input.txt", "w+")
             f.write(data.rstrip("\n"))
             f.close()
             logger.info("... done!")
