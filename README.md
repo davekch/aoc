@@ -45,7 +45,7 @@ $ python3 init.py -l jl
 ## Notes on languages
 
 ### Python
-Templates are in `templates/py`.
+Templates are in `templates/py`. Do `pip install -e utils/py` to install the utility module `aoc.utility`.
 
 ```bash
 $ python init.py
