@@ -2,6 +2,8 @@ module Utils
 
 include("Graphs.jl")
 export Graphs
+include("Geometry.jl")
+export Geometry
 
 
 lines(s::AbstractString) = split(strip(s), "\n")
