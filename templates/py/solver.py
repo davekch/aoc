@@ -1,8 +1,6 @@
 import sys
 
-sys.path.insert(0, "../utils/py")
-import utils
-
+from aoc import utils
 
 measure_time = utils.stopwatch()
 
