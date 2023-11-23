@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aoc"
+description = "utilities for advent of code"
+version = "0.1.0"
+readme = "README.md"
+authors = [
+    { name="David Koch", email="dave-koch@web.de" }
+]
+requires-python = ">=3.8"
+
+[project.urls]
+"Homepage" = "https://github.com/davekch/aoc/"
