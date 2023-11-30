@@ -53,7 +53,7 @@ function shortestpath(bfs_result::Dict{Node,Union{Node,Nothing}}, startnode::Nod
     end
     reverse(path)
 end
-export BFS
+export shortestpath
 
 
 end # module Graphs
