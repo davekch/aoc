@@ -1,5 +1,5 @@
 module Geometry
-import Base: +, -, *
+import Base: +, -, *,==
 
 mutable struct Point2D{T<:Integer}
     x::T
@@ -7,6 +7,10 @@ mutable struct Point2D{T<:Integer}
 end
 Point2D(p::Vector{T}) where T <: Integer = Point2D(p[1], p[2])
 export Point2D
+
+Base.show(io::IO, p::Point2D) = print(io, "P($(p.x), $(p.y))")
+
+Base.hash(p::Point2D) = hash("$(p.x);$(p.y)")
 
 to_vec(p::Point2D) = [p.x, p.y]
 export to_vec
@@ -26,6 +30,7 @@ end
 -(p1::Point2D, p2::Point2D) = Point2D(p1.x - p2.x, p1.y - p2.y)
 -(p::Point2D) = Point2D(-p.x, -p.y)
 *(a::Integer, p::Point2D) = Point2D(a * p.x, a * p.y)
+==(p1::Point2D, p2::Point2D) = p1.x == p2.x && p1.y == p2.y
 
 """
 scalar product
