@@ -8,9 +8,9 @@ struct Solution
     parse_input::Function
     part1::Function
     part2::Union{Function, Nothing}  # for when one function solves both parts
-    function Solution(parse_input::Function, solve::Function)
-        new(parse_input, solve, nothing)
-    end
+end
+function Solution(parse_input::Function, solve::Function)
+    Solution(parse_input, solve, nothing)
 end
 export Solution
 
