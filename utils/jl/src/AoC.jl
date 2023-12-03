@@ -4,29 +4,34 @@ using Test
 include("Utils.jl")
 
 
-abstract type AoCInput end
-abstract type AoCParsed end
+struct Solution
+    parse_input::Function
+    part1::Function
+    part2::Union{Function, Nothing}  # for when one function solves both parts
+    function Solution(parse_input::Function, solve::Function)
+        new(parse_input, solve, nothing)
+    end
+end
+export Solution
 
-# define methods for these functions in each solver
-parse_input(i::AoCInput) = missing
-export parse_input
-solve1(p::AoCParsed) = missing
-export solve1
-solve2(p::AoCParsed) = missing
-export solve2
 
-
-function main(part=missing)
+function main(solution::Solution, part=missing)
     raw_data = read("input.txt", String)
-    t_p = @elapsed parsed = parse_input(raw_data)
-    if part === 1 || part === missing
-        t_1 = @elapsed part1 = solve1(parsed)
-        println("part 1: $part1")
+    t_p = @elapsed parsed = solution.parse_input(raw_data)
+    if part === missing || part == 1
+        t_1 = @elapsed part1 = solution.part1(parsed)
+        if solution.part2 === nothing
+            (part1, part2) = part1
+            println("part 1: $part1")
+            println("part 2: $part2")
+        else
+            println("part 1: $part1")
+        end
     else
         t_1 = 0
     end
-    if part === 2 || part === missing
-        t_2 = @elapsed part2 = solve2(parsed)
+    if (part === missing || part == 2) && solution.part2 !== nothing
+        t_2 = @elapsed part2 = solution.part2(parsed)
         println("part 2: $part2")
     else
         t_2 = 0
@@ -38,17 +43,18 @@ function main(part=missing)
     println("part 2 time: $t_2")
     println("        sum: $(t_p + t_1 + t_2)")
 end
-export main
 
 
-function test_solution(testinput, testanswer_1, testanswer_2, part=missing)
-    testparsed = parse_input(testinput)
-    if part === 1 || part === missing
-        @info @test solve1(testparsed) == testanswer_1
+function test_solution(solution::Solution, testinput, testanswer_1, testanswer_2)
+    testparsed = solution.parse_input(testinput)
+    if solution.part2 !== nothing
+        part1 = solution.part1(testparsed)
+        part2 = solution.part2(testparsed)
+    else
+        (part1, part2) = solution.part1(testparsed)
     end
-    if part === 2 || part === missing
-        @info @test solve2(testparsed) == testanswer_2
-    end
+    @info @test part1 == testanswer_1
+    @info @test part2 == testanswer_2
 end
 export test_solution
 
