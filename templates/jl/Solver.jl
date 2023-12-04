@@ -7,14 +7,17 @@ using AoC.Utils
 function parse_input(raw_data)
     raw_data
 end
+export parse_input
 
 
 function solve1(parsed)
 end
+export solve1
 
 
 function solve2(parsed)
 end
+export solve2
 
 
 solution = Solution(parse_input, solve1, solve2)
