@@ -1,11 +1,17 @@
 */input.txt
+*.swp
+aoc_session.sh
+
+# python
 *__pycache__
 utils/py/aoc.egg-info
 *.pytest_cache
 *.cache
 *.pyc
-*.swp
+
+# haskell
+*.dyn_hi
+*.dyn_o
 *.o
 *.hi
-*solver
-aoc_session.sh
+*/solver
