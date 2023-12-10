@@ -1,5 +1,6 @@
 module Geometry
 import Base: +, -, *,==
+using ..Utils
 
 mutable struct Point2D{T<:Integer}
     x::T
@@ -76,6 +77,41 @@ rotate around the origin by 90 degrees to the left (anticlockwise)
 """
 rot90l(p::Point2D) = [0 (-1); 1 0] * to_vec(p) |> Point2D
 export rot90l
+
+
+# ------------ drawing -----------------
+
+"""
+return minx, maxx, miny, maxy in a collection of points
+"""
+function corners(ps)
+    xs, ys = unzip(ps)
+    minx = minimum(xs)
+    maxx = maximum(xs)
+    miny = minimum(ys)
+    maxy = maximum(ys)
+    minx, maxx, miny, maxy
+end
+export corners
+
+function grid_to_string(grid::Dict{Point2D, Char}; empty::Char='.')
+    pretty = ""
+    minx, maxx, miny, maxy = corners(keys(grid))
+    points = keys(grid)
+    for y in miny:maxy
+        for x in minx:maxx
+            p = Point2D(x, y)
+            if p ∈ points
+                pretty *= grid[p]
+            else
+                pretty *= empty
+            end
+        end
+        pretty *= '\n'
+    end
+    pretty
+end
+export grid_to_string
 
 
 end # module Geometry

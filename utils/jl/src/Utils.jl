@@ -18,5 +18,8 @@ export ints
 digits(s::AbstractString)::Vector{Int} = map(int, [s[idx] for idx in findall(r"[0-9]", s)])
 export digits
 
+unzip(a) = map(x->getfield.(a, x), fieldnames(eltype(a)))
+export unzip
+
 end # module Utils
 
