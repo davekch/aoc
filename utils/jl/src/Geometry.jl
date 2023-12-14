@@ -94,7 +94,10 @@ function corners(ps)
 end
 export corners
 
-function grid_to_string(grid::Dict{Point2D, Char}; empty::Char='.')
+"""
+turn a grid::Dict{Point2D, Char} into a pretty string
+"""
+function grid_to_string(grid; empty='.')
     pretty = ""
     minx, maxx, miny, maxy = corners(keys(grid))
     points = keys(grid)
