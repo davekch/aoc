@@ -13,6 +13,11 @@ Base.show(io::IO, p::Point2D) = print(io, "P($(p.x), $(p.y))")
 
 Base.hash(p::Point2D) = hash("$(p.x);$(p.y)")
 
+# this makes the point act as a 0-dimensional scalar
+# this allows broadcasting like this: Point2D(x, y) .+ [Point2D(...), ...]
+# broadcasting like [p1, p2] .+ [p3, p4] is still possible ofc
+Base.broadcastable(p::Point2D) = Ref(p)
+
 to_vec(p::Point2D) = [p.x, p.y]
 export to_vec
 
