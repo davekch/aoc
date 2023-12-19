@@ -1,5 +1,6 @@
 module Geometry
 import Base: +, -, *,==
+import Combinatorics: combinations
 using ..Utils
 
 mutable struct Point2D{T<:Integer}
@@ -84,6 +85,43 @@ rot90l(p::Point2D) = [0 (-1); 1 0] * to_vec(p) |> Point2D
 export rot90l
 
 
+"""
+given a list of n-dimensional tuples of ranges (example: (1:3, 2:8) represents
+a 2D rectangle with x ∈ 1:3, y∈2:8), calculate the volume of all intersections
+"""
+function nd_intersection_volume(hypercubes)
+    V = 0
+    # calculate pairwise intersection volumes and add them up
+    for (c1, c2) in combinations(hypercubes, 2)
+        v = 1
+        for (s1, s2) in zip(c1, c2)
+            v *= length(intersect(s1, s2))
+        end
+        V += v
+    end
+    V
+end
+export nd_intersection_volume
+
+
+"""
+given a list of n-dimensional tuples of ranges  (example: (1:3, 2:8) represents
+a 2D rectangle with x ∈ 1:3, y∈2:8), calculate the volume of the union
+"""
+function nd_union_volume(hypercubes)
+    V = 0
+    for cube in hypercubes
+        v = 1
+        for side in cube
+            v *= length(side)
+        end
+        V += v
+    end
+    V - nd_intersection_volume(hypercubes)
+end
+export nd_union_volume
+
+
 # ------------ drawing -----------------
 
 """
@@ -100,7 +138,7 @@ end
 export corners
 
 """
-turn a grid::Dict{Point2D, Char} into a pretty string
+turn a grid::Dict{Point2D, Any} into a pretty string
 """
 function grid_to_string(grid; empty='.')
     pretty = ""
@@ -110,7 +148,7 @@ function grid_to_string(grid; empty='.')
         for x in minx:maxx
             p = Point2D(x, y)
             if p ∈ points
-                pretty *= grid[p]
+                pretty *= string(grid[p])
             else
                 pretty *= empty
             end
