@@ -88,6 +88,7 @@ export rot90l
 """
 given a list of n-dimensional tuples of ranges (example: (1:3, 2:8) represents
 a 2D rectangle with x ∈ 1:3, y∈2:8), calculate the volume of all intersections
+CAUTION: only correct if shapes overlap only pairwise
 """
 function nd_intersection_volume(hypercubes)
     V = 0
@@ -107,6 +108,7 @@ export nd_intersection_volume
 """
 given a list of n-dimensional tuples of ranges  (example: (1:3, 2:8) represents
 a 2D rectangle with x ∈ 1:3, y∈2:8), calculate the volume of the union
+CAUTION: only correct if shapes overlap only pairwise
 """
 function nd_union_volume(hypercubes)
     V = 0
@@ -120,6 +122,45 @@ function nd_union_volume(hypercubes)
     V - nd_intersection_volume(hypercubes)
 end
 export nd_union_volume
+
+
+"""
+calculates the area of a polygon specified by an ordered sequence of
+integer vertex points (implements shoelace)
+"""
+function polyarea(points)
+    A = 0
+    N = length(points)
+    for i = 1:N
+        x1,y1 = points[i]
+        x2,y2 = points[i%N + 1]
+        A += (y1 + y2) * (x1 - x2)
+    end
+    abs(A) // 2
+end
+export polyarea
+
+
+"""
+given a set or list of points that describe a boundary, and a point inside the
+boundary, perform flood-fill algorithm and return a set of all points inside boundary
+"""
+function flood_fill(boundary, start)
+    filled = Set()
+    q = Queue{Point2D}()
+    enqueue!(q, start)
+    while !isempty(q)
+        current = dequeue!(q)
+        push!(filled, current)
+        for neighbour in neighbours8(current)
+            if neighbour ∉ filled && neighbour ∉ boundary && neighbour ∉ q
+                enqueue!(q, neighbour)
+            end
+        end
+    end
+    filled
+end
+export flood_fill
 
 
 # ------------ drawing -----------------
