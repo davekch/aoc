@@ -21,5 +21,35 @@ export digits
 unzip(a) = map(x->getfield.(a, x), fieldnames(eltype(a)))
 export unzip
 
+
+"""
+parses the input into a grid of type Dict{Point2D, Char}
+"""
+function read_grid(input)
+    grid = Dict{Geometry.Point2D, Char}()
+    for (y, line) in input |> strip |> lines |> enumerate
+        for (x, c) in line |> enumerate
+            grid[Geometry.Point2D(x, y)] = c
+        end
+    end
+    grid
+end
+export read_grid
+
+
+function invert_dict(d)
+    inverted = Dict()
+    for (k, v) in d
+        for nk in v
+            if nk ∉ keys(inverted)
+                inverted[nk] = []
+            end
+            push!(inverted[nk], k)
+        end
+    end
+    inverted
+end
+export invert_dict
+
 end # module Utils
 
