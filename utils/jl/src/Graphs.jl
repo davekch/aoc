@@ -49,6 +49,9 @@ function shortestpath(bfs_result::Dict{Node,Union{Node,Nothing}}, startnode::Nod
             break
         end
     end
+    if last(path) != startnode
+        return []  # no path found
+    end
     reverse(path)
 end
 export shortestpath
