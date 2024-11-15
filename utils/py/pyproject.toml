@@ -1,16 +1,18 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "aoc"
-description = "utilities for advent of code"
 version = "0.1.0"
+description = "utilities for aoc"
 readme = "README.md"
 authors = [
-    { name="David Koch", email="dave-koch@web.de" }
+    { name = "David Koch", email = "dvkch@proton.me" }
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.13"
+dependencies = [
+    "chardet>=5.2.0",
+    "requests>=2.32.3",
+    "rich>=13.9.4",
+]
 
-[project.urls]
-"Homepage" = "https://github.com/davekch/aoc/"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
