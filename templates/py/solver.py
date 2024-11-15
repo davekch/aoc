@@ -1,5 +1,3 @@
-import sys
-
 from aoc import utils
 
 measure_time = utils.stopwatch()
@@ -24,12 +22,11 @@ def solve2(data):
 
 if __name__ == "__main__":
     data = parse(open("input.txt").read().strip())
-    print("Part 1: {}".format(solve1(data)))
-    print("Part 2: {}".format(solve2(data)))
+    print(f"Part 1: {solve1(data)}")
+    print(f"Part 2: {solve2(data)}")
 
     print("\nTime taken:")
     for func, time in measure_time.times:
         print(f"{func:8}{time}s")
     print("----------------")
-    print("total   {}s".format(sum(t for _, t in measure_time.times)))
-
+    print(f"total   {sum(t for _, t in measure_time.times)}s")
