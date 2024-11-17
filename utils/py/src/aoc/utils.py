@@ -8,12 +8,12 @@ def ints(s: str) -> list[int]:
     return list(map(int, re.findall(r"[+-]?\d+", s)))
 
 
-def corners(grid: Dict[tuple[int], Any]):
-    """takes a dict that maps points to something and returns
+def corners(points):
+    """takes an iterable of points and returns
     minx, maxx, miny, maxy of the outermost points
     """
-    xs = [x for x,_ in grid.keys()]
-    ys = [y for _,y in grid.keys()]
+    xs = [x for x,_ in points]
+    ys = [y for _,y in points]
     return min(xs), max(xs), min(ys), max(ys)
 
 
@@ -31,6 +31,17 @@ def dictgrid_to_str(grid: dict[tuple[int]], empty=" ") -> str:
             img += str(p)
         img += "\n"
     return img
+
+
+def str_to_grid_dict(input: str) -> dict:
+    """
+    read a string into a (x,y)->chr dict
+    """
+    grid = {}
+    for y, line in enumerate(input.splitlines()):
+        for x, c in enumerate(line):
+            grid[(x, y)] = c
+    return grid
 
 
 def stopwatch():
