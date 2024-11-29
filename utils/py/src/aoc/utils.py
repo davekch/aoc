@@ -44,19 +44,28 @@ def str_to_grid_dict(input: str) -> dict:
     return grid
 
 
-def stopwatch():
-    """a factory for time measurement decorators"""
-    times = []
-    def measure_time(func):
-        @wraps(func)
-        def _func(*args, **kwargs):
+class stopwatch:
+    def __init__(self):
+        self.times = []
+
+    def measure_time(self, f):
+        """
+        decorator to measure a function's runtime
+        """
+        @wraps(f)
+        def _f(*args, **kwargs):
             start = datetime.now()
-            result = func(*args, **kwargs)
+            result = f(*args, **kwargs)
             end = datetime.now()
-            times.append((func.__name__, (end - start).total_seconds()))
+            self.times.append((f.__name__, (end - start).total_seconds()))
             return result
 
-        return _func
-    measure_time.times = times
-    return measure_time
+        return _f
+
+    def print_times(self):
+        print("Time taken:")
+        for func, time in self.times:
+            print(f"{func:8}{time}s")
+        print("----------------")
+        print(f"total   {sum(t for _, t in self.times)}s")
 
