@@ -1,10 +1,11 @@
 from queue import Queue, PriorityQueue
 from collections import defaultdict
 
+from aoc.data import GraphABC, WeightedGraphABC
 
-def BFS(graph, start, neighbors_func, finished=None, visualize=None):
-    """breadth first search on graph. neighbors_func should
-    take the graph and a point and return a list of adjacent points
+
+def BFS[Node](graph: GraphABC[Node], start: Node, finished=None, visualize=None) -> dict[Node, Node | None]:
+    """breadth first search on graph.
     optionally provide a function `finished` that terminates the search
     once it returns true when called with the current node
     """
@@ -20,7 +21,7 @@ def BFS(graph, start, neighbors_func, finished=None, visualize=None):
         if finished is not None and finished(v):
             return path
 
-        for n in neighbors_func(graph, v):
+        for n in graph.neighbours(v):
             if n not in path:
                 path[n] = v
                 queue.put(n)
@@ -40,7 +41,11 @@ def shortestpath(bfs_result, start, end) -> list:
     return list(reversed(path))
 
 
-def dijkstra(graph, start, neighbors_func, distance_func, finished=None, visualize=None):
+def dijkstra[Node](graph: WeightedGraphABC[Node], start: Node, finished=None, visualize=None):
+    """
+    runs dijkstra on graph
+    returns last node visited, node -> distance to start dict, node -> node path dict
+    """
     queue = PriorityQueue()
     queue.put((0, start))
     distances = defaultdict(lambda: 1000000000)
@@ -54,10 +59,10 @@ def dijkstra(graph, start, neighbors_func, distance_func, finished=None, visuali
 
         if finished is not None and finished(current):
             return current, distances, path
-        for n in neighbors_func(graph, current):
+        for n in graph.neighbours(current):
             if n in path:
                 continue
-            d = distances[current] + distance_func(current, n, graph)
+            d = distances[current] + graph.distance(current, n)
             if d < distances[n]:
                 distances[n] = d
                 path[n] = current
