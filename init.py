@@ -1,6 +1,8 @@
+#!/usr/bin/env python
+
 import os
 from pathlib import Path
-from shutil import copyfile
+from shutil import copyfile, copystat
 import requests
 from datetime import date
 import logging
@@ -32,6 +34,7 @@ def setup_dir(day, languages):
                 logger.warning(f"{newdir} already contains {file}, skipping")
             else:
                 copyfile(template_dir / file, newdir / file)
+                copystat(template_dir / file, newdir / file)
     logger.info(f"done copying templates to {newdir}")
 
 
