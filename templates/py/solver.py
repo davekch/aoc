@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from aoc import utils
 
 watch = utils.stopwatch()
