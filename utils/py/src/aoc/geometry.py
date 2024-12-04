@@ -19,6 +19,14 @@ class Vec:
     def __init__(self, *coords):
         self.coords = tuple(coords)
 
+    def __eq__(self, other):
+        if not isinstance(other, Vec):
+            return False
+        return self.coords == other.coords
+
+    def __hash__(self):
+        return hash(tuple(self.coords))
+
     @property
     def x(self):
         return self.coords[0]
@@ -35,6 +43,11 @@ class Vec:
 
     def __sub__(self, other):
         return Vec(*[x1-x2 for x1, x2 in zip(self, other)])
+
+    def __rmul__(self, other):
+        if isinstance(other, Vec):
+            return Vec(*[x1 * x2 for x1, x2 in zip(self, other)])
+        return Vec(*[other * x for x in self.coords])
 
     def __repr__(self):
         return f"Vec({','.join([str(x) for x in self])})"
