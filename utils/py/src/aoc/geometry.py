@@ -44,6 +44,9 @@ class Vec:
     def __sub__(self, other):
         return Vec(*[x1-x2 for x1, x2 in zip(self, other)])
 
+    def __neg__(self):
+        return Vec(*[-c for c in self.coords])
+
     def __rmul__(self, other):
         if isinstance(other, Vec):
             return Vec(*[x1 * x2 for x1, x2 in zip(self, other)])
