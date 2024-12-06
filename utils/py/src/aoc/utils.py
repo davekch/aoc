@@ -17,15 +17,15 @@ def corners(points):
     return min(xs), max(xs), min(ys), max(ys)
 
 
-def dictgrid_to_str(grid: dict[tuple[int]], empty=" ") -> str:
+def dictgrid_to_str(grid: dict[tuple[int]], empty=" ", keybuilder=tuple) -> str:
     """converts a dict that maps 2D points to values to a printable
     grid string. positive y-axis points down"""
     minx, maxx, miny, maxy = corners(grid)
     img = ""
     for y in range(miny, maxy+1):
         for x in range(minx, maxx+1):
-            if (x,y) in grid:
-                p = grid[(x,y)]
+            if keybuilder(x,y) in grid:
+                p = grid[keybuilder(x,y)]
             else:
                 p = empty
             img += str(p)
@@ -42,6 +42,15 @@ def str_to_grid_dict(input: str) -> dict:
         for x, c in enumerate(line):
             grid[(x, y)] = c
     return grid
+
+
+def key_of_value[K, V](d: dict[K, V], v: V) -> K | None:
+    """
+    get the first key in d that has value v or None
+    """
+    for k, vv in d.items():
+        if v == vv:
+            return k
 
 
 class stopwatch:
