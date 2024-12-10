@@ -4,6 +4,9 @@ from numbers import Number
 
 
 class GraphABC[Node](ABC):
+    def __init__(self, graph):
+        self.graph = graph
+
     @abstractmethod
     def neighbours(self, node: Node) -> Iterable[Node]:
         ...
