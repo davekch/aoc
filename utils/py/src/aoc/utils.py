@@ -17,7 +17,11 @@ def corners(points):
     return min(xs), max(xs), min(ys), max(ys)
 
 
-def dictgrid_to_str(grid: dict[tuple[int]], empty=" ", keybuilder=tuple) -> str:
+def _mktuple(*args):
+    return tuple(args)
+
+
+def dictgrid_to_str(grid: dict[tuple[int]], empty=" ", keybuilder=_mktuple) -> str:
     """converts a dict that maps 2D points to values to a printable
     grid string. positive y-axis points down"""
     minx, maxx, miny, maxy = corners(grid)
