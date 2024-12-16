@@ -55,6 +55,12 @@ class Vec:
     def __repr__(self):
         return f"Vec({','.join([str(x) for x in self])})"
 
+    def __lt__(self, other):
+        # needed to be pushed to a priority queue
+        if not isinstance(other, Vec):
+            raise NotImplementedError()
+        return self.abs2() < other.abs2()
+
     def abs2(self):
         """squared euclidean distance"""
         return sum([x**2 for x in self])
