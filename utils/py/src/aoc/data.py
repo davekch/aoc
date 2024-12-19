@@ -1,9 +1,13 @@
 from abc import ABC, abstractmethod
 from typing import Iterable
 from numbers import Number
+from typing import TypeVar, Generic
 
 
-class GraphABC[Node](ABC):
+Node = TypeVar("Node")
+
+
+class GraphABC(ABC, Generic[Node]):
     def __init__(self, graph):
         self.graph = graph
 
@@ -12,7 +16,7 @@ class GraphABC[Node](ABC):
         ...
 
 
-class WeightedGraphABC[Node](GraphABC, ABC):
+class WeightedGraphABC(GraphABC, Generic[Node]):
     @abstractmethod
     def distance(self, node1: Node, node2: Node) -> Number:
         ...

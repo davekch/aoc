@@ -1,6 +1,6 @@
 from datetime import datetime
 from functools import wraps
-from typing import Dict, Any
+from typing import TypeVar, Mapping
 import re
 
 
@@ -48,7 +48,10 @@ def str_to_grid_dict(input: str) -> dict:
     return grid
 
 
-def key_of_value[K, V](d: dict[K, V], v: V) -> K | None:
+K = TypeVar("K")
+V = TypeVar("V")
+
+def key_of_value(d: Mapping[K, V], v: V) -> K | None:
     """
     get the first key in d that has value v or None
     """

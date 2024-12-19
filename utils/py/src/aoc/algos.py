@@ -1,10 +1,14 @@
 from queue import Queue, PriorityQueue
 from collections import defaultdict
+from typing import TypeVar
 
 from aoc.data import GraphABC, WeightedGraphABC
 
 
-def BFS[Node](graph: GraphABC[Node], start: Node, finished=None, visualize=None) -> dict[Node, Node | None]:
+Node = TypeVar("Node")
+
+
+def BFS(graph: GraphABC[Node], start: Node, finished=None, visualize=None) -> dict[Node, Node | None]:
     """breadth first search on graph.
     optionally provide a function `finished` that terminates the search
     once it returns true when called with the current node
@@ -41,7 +45,7 @@ def shortestpath(bfs_result, start, end) -> list:
     return list(reversed(path))
 
 
-def dijkstra[Node](graph: WeightedGraphABC[Node], start: Node, finished=None, visualize=None):
+def dijkstra(graph: WeightedGraphABC[Node], start: Node, finished=None, visualize=None):
     """
     runs dijkstra on graph
     returns last node visited, node -> distance to start dict, node -> node path dict
