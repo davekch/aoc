@@ -37,14 +37,14 @@ def dictgrid_to_str(grid: dict[tuple[int]], empty=" ", keybuilder=_mktuple) -> s
     return img
 
 
-def str_to_grid_dict(input: str) -> dict:
+def str_to_grid_dict(input: str, keybuilder=_mktuple) -> dict:
     """
     read a string into a (x,y)->chr dict
     """
     grid = {}
     for y, line in enumerate(input.splitlines()):
         for x, c in enumerate(line):
-            grid[(x, y)] = c
+            grid[keybuilder(x, y)] = c
     return grid
 
 
