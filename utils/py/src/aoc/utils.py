@@ -63,6 +63,7 @@ def key_of_value(d: Mapping[K, V], v: V) -> K | None:
 class stopwatch:
     def __init__(self):
         self.times = []
+        self._undecorated = {}
 
     def measure_time(self, f):
         """
@@ -76,6 +77,7 @@ class stopwatch:
             self.times.append((f.__name__, (end - start).total_seconds()))
             return result
 
+        self._undecorated[_f] = f
         return _f
 
     def print_times(self):
@@ -85,3 +87,5 @@ class stopwatch:
         print("----------------")
         print(f"total   {sum(t for _, t in self.times)}s")
 
+    def ignore(self, f):
+        return self._undecorated.get(f, f)
