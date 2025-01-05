@@ -2,6 +2,7 @@ from datetime import datetime
 from functools import wraps
 from typing import TypeVar, Mapping
 import re
+import string
 
 
 def ints(s: str) -> list[int]:
@@ -58,6 +59,27 @@ def key_of_value(d: Mapping[K, V], v: V) -> K | None:
     for k, vv in d.items():
         if v == vv:
             return k
+
+
+def coefficients_in_base(n: int, base: int) -> list[int]:
+    """returns the coefficients of a number n in any base"""
+    if n == 0:
+        return [0]
+    digits = []
+    while n:
+        digits.append(n % base)
+        n //= base
+    return digits[::-1]
+
+
+def to_base(n: int, base: int) -> str:
+    """
+    returns a number in a base as a string (maximum base: 62)
+    note: the reverse is `int(string, base)`
+    """
+    coefficients = coefficients_in_base(n, base)
+    representation = string.digits + string.ascii_letters
+    return "".join(representation[c] for c in coefficients)
 
 
 class stopwatch:
