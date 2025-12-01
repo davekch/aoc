@@ -5,6 +5,12 @@ import re
 import string
 
 
+def sign(n) -> int:
+    if n >= 0:
+        return 1
+    return -1
+
+
 def ints(s: str) -> list[int]:
     return list(map(int, re.findall(r"[+-]?\d+", s)))
 
