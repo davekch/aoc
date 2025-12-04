@@ -37,6 +37,18 @@ end
 export read_grid
 
 
+"""
+read_as_matrix(input::AbstractString)
+parses the input into a grid (2D array/matrix)
+"""
+function read_as_matrix(input::AbstractString)
+    raw_data = strip(input)
+    lines = collect.(split(raw_data, '\n'))
+    return permutedims([lines...;;])
+end
+export read_as_matrix
+
+
 function invert_dict(d)
     inverted = Dict()
     for (k, v) in d
