@@ -21,6 +21,8 @@ export digits
 unzip(a) = map(x->getfield.(a, x), fieldnames(eltype(a)))
 export unzip
 
+read_range(line::AbstractString) = range(parse.(Int, split(line, '-'))...)
+export read_range
 
 """
 parses the input into a grid of type Dict{Point2D, Char}
