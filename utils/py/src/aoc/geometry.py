@@ -94,3 +94,21 @@ def neighbours4(p: Vec) -> list[Vec]:
     get the 4 horizontally and vertically adjacent points
     """
     return [p + d for d in [Direction.N, Direction.E, Direction.S, Direction.W]]
+
+
+def neighbours8(p: Vec) -> list[Vec]:
+    """
+    get all 8 adjacent points
+    """
+    return [
+        p + d for d in [
+            Direction.N,
+            Direction.NE,
+            Direction.E,
+            Direction.SE,
+            Direction.S,
+            Direction.SW,
+            Direction.W,
+            Direction.NW,
+        ]
+    ]

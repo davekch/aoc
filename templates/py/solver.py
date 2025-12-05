@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from pathlib import Path
 from aoc import utils
 from aoc.cli import main
 
