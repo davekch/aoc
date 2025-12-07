@@ -4,7 +4,7 @@ from aoc import utils
 from aoc.cli import main
 
 
-def parse(raw_data):
+def parse(raw_data: str):
     pass
 
 
