@@ -68,6 +68,10 @@ class Vec:
     def dot(self, other):
         return sum([x1 * x2 for x1, x2 in zip(self, other)])
 
+    def dist2(self, other):
+        """pythagorean distance squared"""
+        return sum([(x1 - x2)**2 for x1, x2 in zip(self, other)])
+
 
 class Direction:
     """
