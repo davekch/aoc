@@ -2,6 +2,7 @@ module Geometry
 import Base: +, -, *,==
 import Combinatorics: combinations
 using ..Utils
+using DataStructures
 
 mutable struct Point2D{T<:Integer}
     x::T
