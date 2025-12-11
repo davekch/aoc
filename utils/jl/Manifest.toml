@@ -8,7 +8,7 @@ project_hash = "0611360fc30b2bc9cc246fe1e517cba5a62fff81"
 deps = ["Combinatorics", "DataStructures", "Test"]
 path = "."
 uuid = "c8bb57cb-0d6f-4b80-8764-b54df5b22180"
-version = "0.3.0"
+version = "0.4.0"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
