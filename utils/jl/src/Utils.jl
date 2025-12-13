@@ -21,6 +21,8 @@ export digits
 unzip(a) = map(x->getfield.(a, x), fieldnames(eltype(a)))
 export unzip
 
+read_range(line::AbstractString) = range(parse.(Int, split(line, '-'))...)
+export read_range
 
 """
 parses the input into a grid of type Dict{Point2D, Char}
@@ -35,6 +37,18 @@ function read_grid(input)
     grid
 end
 export read_grid
+
+
+"""
+read_as_matrix(input::AbstractString)
+parses the input into a grid (2D array/matrix)
+"""
+function read_as_matrix(input::AbstractString)
+    raw_data = strip(input)
+    lines = collect.(split(raw_data, '\n'))
+    return permutedims([lines...;;])
+end
+export read_as_matrix
 
 
 function invert_dict(d)

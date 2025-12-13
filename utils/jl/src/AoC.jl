@@ -2,7 +2,7 @@ module AoC
 using Test
 
 include("Utils.jl")
-
+VERSION >= v"1.11.0-DEV.469" && eval(Meta.parse("public Utils"))
 
 struct Solution
     parse_input::Function
