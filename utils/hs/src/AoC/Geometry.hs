@@ -1,4 +1,4 @@
-module Geometry where
+module AoC.Geometry where
 
 import qualified Data.Vector as Vec
 import Data.Vector (Vector)

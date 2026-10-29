@@ -15,3 +15,5 @@ utils/py/aoc.egg-info
 *.o
 *.hi
 */solver
+**/dist-newstyle
+**/.stack-work

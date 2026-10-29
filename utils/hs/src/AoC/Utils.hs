@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveFoldable #-}
 {-# LANGUAGE DeriveTraversable #-}
 
-module Utils where
+module AoC.Utils where
 
 import Data.Function (on)
 import Data.Char
