@@ -13,6 +13,7 @@ library
     -- Modules exported by the library.
     exposed-modules:
         AoC
+        AoC.CLI
         AoC.Geometry
         AoC.Utils
 

@@ -1,9 +1,10 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-import Text.RawString.QQ 
+import Text.RawString.QQ
 import Data.List
-import Utils
 import AoC
+import AoC.Utils
+import AoC.CLI
 
 getInput :: IO String
 getInput = readFile "input.txt"
@@ -47,7 +48,7 @@ main' (CLIOptions p False) = do
         _ -> (do
             printPart 1 (solve1 parsed)
             printPart 2 (solve2 parsed))
-main' (CLIOptions p True) = 
+main' (CLIOptions p True) =
     case p of
         1 -> printPart 1 test1
         2 -> printPart 2 test2
