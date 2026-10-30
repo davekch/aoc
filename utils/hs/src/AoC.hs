@@ -1,6 +1,10 @@
 module AoC where
 
 
+getInput :: IO String
+getInput = readFile "input.txt"
+
+
 data TestResult a = Ok | Fail a a
 
 instance (Show a) => Show (TestResult a) where
