@@ -1,0 +1,5 @@
+resolver: lts-24.0
+
+packages:
+  - .
+  - ./aoc/utils/hs
