@@ -2,11 +2,11 @@
 
 import os
 from pathlib import Path
-from shutil import copyfile, copystat
 import requests
 from datetime import date
 import logging
 from argparse import ArgumentParser
+from language_settings import get_setting
 
 logging.basicConfig(
     level=logging.INFO, format="%(levelname)-8s %(funcName)s: %(message)s",
@@ -23,19 +23,9 @@ def setup_dir(day, languages):
     if not newdir.exists():
         os.mkdir(newdir)
         logger.info(f"created a new directory {newdir}")
-    lang_dirs = os.listdir(TEMPLATES_DIR)
     for lang in languages:
-        if lang not in lang_dirs:
-            logger.error(f"no template files found for {lang}; available: {', '.join(lang_dirs)}")
-            continue
-        template_dir = TEMPLATES_DIR / lang
-        for file in os.listdir(template_dir):
-            if file in os.listdir(newdir):
-                logger.warning(f"{newdir} already contains {file}, skipping")
-            else:
-                copyfile(template_dir / file, newdir / file)
-                copystat(template_dir / file, newdir / file)
-    logger.info(f"done copying templates to {newdir}")
+        setting = get_setting(lang)
+        setting.setup_dir(TEMPLATES_DIR, newdir)
 
 
 def get_input(day, year):
