@@ -70,25 +70,18 @@ julia> main()  # or main(1) or test(2)
 Revise hot reloads code in `Solver.jl`, so code along and just keep your REPL running.
 
 ### Haskell
-Templates are in `templates/hs`
-
-dependencies: `cabal install split optparse-applicative raw-strings-qq vector parsec`
+Templates are in `templates/hs`. `solvers.cabal` and `stack.yaml` get copied to the root of the project and not into each day's folder. The init script adds a stanza for the day's executable to `solvers.cabal`.
 
 ```bash
 $ python init.py -l hs
 $ cd dayXX
-$ ghc -i../utils/hs solver.hs
-$ ./solver
+$ stack build
+$ stack exec dayXX
 ```
 
-Run tests with `./solver --test` or in the repl:
-```
-$ ghci -i../utils/hs solver.hs
-λ> test1
-λ> test2
-```
+Run tests with `dayXX --test`.
 
-You can also run only part one or two with `./solver --part 1`.
+You can also run only part one or two with `dayXX --part 1`.
 
 Utilities are in `utils/hs`
 
